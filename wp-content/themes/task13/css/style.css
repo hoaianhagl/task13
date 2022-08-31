@@ -520,3 +520,23 @@ body {
   font-size: 2rem;
   padding: 15px 0 30px;
 }
+
+.p-notfound {
+  margin: 0 auto;
+  text-align: center;
+}
+.p-notfound .c-text {
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.p-notfound .c-text:hover {
+  color: #90c132;
+}
+
+.p-notfound img {
+  display: block;
+  max-width: 50%;
+  margin: 0 auto;
+}

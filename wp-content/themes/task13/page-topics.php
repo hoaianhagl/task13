@@ -1,28 +1,32 @@
 <?php get_header(); ?>
 
-<?php
-	$posts = get_posts([
-		'post_type' => 'topics',
-		'post_status' => 'publish',
-		'numberposts' => -1
-		// 'order'    => 'ASC'
-  	]);
-?>
-
 <main class="p-topics">
 	<div class="c-title c-title--page">
 		<h1>TOPICS</h1>
 	</div>
 	<div class="l-container">
 		<ul class="c-listpost">
-			<?php foreach ($posts as $post){?>
-			<li>
-				<span class="datepost"><?php echo $post->post_date_gmt ?></span>
-				<a href="cat.html" class="c-label">特集記事</a>
-				<a href="#" class="c-label">デイリーニュース</a>
-				<a href="<?php echo $post->post_title ?>"><?php echo $post->post_title; ?></a>
-			</li>
-			<?php } ?>
+		<?php
+		$args = [
+			'post_type' => 'post',
+			'post_status' => 'publish',
+			'posts_per_page'=> 10,  
+			// 'order'    => 'ASC'
+		];
+		$the_query = new WP_Query( $args );
+		?>
+		<?php global $wp_query; $wp_query->in_the_loop = true; ?>
+		<?php 
+			// The Loop
+			while ( $the_query->have_posts() ) : $the_query->the_post();
+		?>
+					<li>
+						<span class="datepost"><?= get_the_date('Y-m-d') ?></span>
+						<a href="cat.html" class="c-label">特集記事</a>
+						<a href="#" class="c-label">デイリーニュース</a>
+						<a href="<?= get_the_permalink() ?>"><?= get_the_title(); ?></a>
+					</li>
+		<?php endwhile; ?>
 			<!-- <li>
 				<span class="datepost">2018/08/22</span>
 				<a href="cat.html" class="c-label">デイリーニュース</a>

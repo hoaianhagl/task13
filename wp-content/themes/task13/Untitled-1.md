@@ -27,3 +27,24 @@ function add_css()
     wp_enqueue_style( 'slider');
 }
 add_action('wp_enqueue_scripts', 'add_css');
+
+<?php while ( have_posts() ) : the_post(); ?>
+
+    	<div class="c-access">
+    		<div class="c-access__info">
+    			<h3 class="c-title c-title--sub"><?php the_field('title_map'); ?></h3>
+    			<p class="address"><?php the_field('add'); ?></p>
+    			<p class="time"><?php the_field('time'); ?></p>
+    			<br/>
+    			<p>
+    				<span class="tel">tel : <?php the_field('tel'); ?></span>
+    				<span class="fax">fax : <?php the_field('fax'); ?></span>
+    				<br/>
+    				<span class="email">mail : <?php the_field('email'); ?></span>
+    			</p>
+    		</div>
+    		<div class="c-access__img">
+    			<img src="<?php echo get_stylesheet_directory_uri(); ?><?php echo get_field('image'); ?>" alt="">
+    		</div>
+    	</div>
+    	<?php endwhile; ?>

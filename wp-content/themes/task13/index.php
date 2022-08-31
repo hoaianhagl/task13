@@ -3,10 +3,14 @@
 <div class="c-mainvisual">
 	<div class="l-container">
 		<div class="c-mainvisual__inner js-slider">
-			<a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/main_img01_no.png" alt=""></a>
-			<a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/main_img02_no.png" alt=""></a>
-			<a href="service.html"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/main_img03_no.png" alt=""></a>
-			<a href="#"><img src="<?php echo get_stylesheet_directory_uri(); ?>/img/main_img04_no.png" alt=""></a>
+		<?php $slider = get_field('slider') ?>
+		<?php if ($slider): ?>
+			<?php foreach ($slider as $imageItem): ?>	
+			<a href="#">
+				<img src="<?= $imageItem['image_slider']['url'] ?>" alt="<?= $imageItem['image_slider']['alt'] ?>">
+			</a>
+			<?php endforeach; ?>
+		<?php endif; ?>
 		</div>
 	</div>
 </div>
@@ -49,9 +53,8 @@
 					<a href="post.html">働き方改革”と管理者</a>
 				</li>
 			</ul>
-
 			<div class="l-btn">
-				<a href="topics.html" class="c-btn c-btn--small">一覧を見る</a>
+				<a href="topics" class="c-btn c-btn--small">一覧を見る</a>
 			</div>
 		</div>
 
@@ -61,61 +64,48 @@
 		</div>
 
 		<!-- <div class="c-access"> -->
-		<?php while ( have_posts() ) : the_post(); ?>
-		<div class="c-access">
-			<div class="c-access__info">
-				<h3 class="c-title c-title--sub"><?php the_field('title_map'); ?></h3>
-				<p class="address"><?php the_field('add'); ?></p>
-				<p class="time"><?php the_field('time'); ?></p>
-				<br/>
-				<p>
-					<span class="tel">tel : <?php the_field('tel'); ?></span>
-					<span class="fax">fax : <?php the_field('fax'); ?></span>
-					<br/>
-					<span class="email">mail : <?php the_field('email'); ?></span>
-				</p>
-			</div>
-			<div class="c-access__img">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?><?php the_field('image'); ?>" alt="">
-			</div>
-		</div>
-		<?php endwhile; // end of the loop. ?>
 		
-		<div class="c-access">
-			<div class="c-access__info">
-				<h3 class="c-title c-title--sub">本店</h3>
-				<p class="address">〒210-0005　川崎市川崎区東田町8 パレール三井ビル8階</p>
-				<p class="time">JR川崎駅東口より徒歩7分　京急川崎駅より徒歩5分</p>
-				<br/>
-				<p>
-					<span class="tel">tel : 044-233-2811</span>
-					<span class="fax">fax : 044-233-0818</span>
+		<?php
+		// Get field
+		$access = get_field('access');
+		?>
+		
+		<?php 
+		// If having access
+		if($access): ?>
+			<?php foreach ($access as $item): ?>
+				<?php 
+					$title = $item['title_map'];
+					$add = $item['add'];
+					$time = $item['time'];
+					$tel = $item['tel'];
+					$fax = $item['fax'];
+					$email = $item['email'];
+					$image_link = $item['image']['url'];
+					$image_alt = $item['image']['alt'];
+				?>
+			<div class="c-access">
+				<div class="c-access__info">
+					<h3 class="c-title c-title--sub"><?= $title ?></h3>
+					<p class="address"><?= $add ?></p>
+					<p class="time"><?= $time ?></p>
 					<br/>
-					<span class="email">mail : info@wms.or.jp</span>
-				</p>
+					<p>
+						<span class="tel">tel : <?= $tel ?></span>
+						<span class="fax">fax : <?= $fax ?></span>
+						<br/>
+						<?php if($email): ?>
+						<span class="email">mail : <?= $email ?></span>	
+						<?php endif; ?>				
+					</p>
+				</div>
+				<div class="c-access__img">
+					<img src="<?= $image_link ?>" alt="<?= $image_alt ?>">
+				</div>
 			</div>
-			<div class="c-access__img">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/map_01.png" alt="">
-			</div>
-		</div>
-
-		<div class="c-access">
-			<div class="c-access__info">
-				<h3 class="c-title c-title--sub">相模原支店</h3>
-				<p class="address">〒252-0231　相模原市中央区相模原3-8-25 第3JSビル7階</p>
-				<p class="time">JR横浜線相模原駅より徒歩2分</p>
-				<br/>
-				<p>
-					<span class="tel">tel : 042-704-9581</span>
-					<span class="fax">fax : 042-704-9582</span>
-					<br/>
-					<span class="email"></span>
-				</p>
-			</div>
-			<div class="c-access__img">
-				<img src="<?php echo get_stylesheet_directory_uri(); ?>/img/map_02.png" alt="">
-			</div>
-		</div>
+			
+			<?php endforeach; ?>
+		<?php endif; ?>
 		<!-- </div> -->
 	</div>
 </main>
