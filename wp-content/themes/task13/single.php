@@ -38,16 +38,14 @@
 		<div class="l-main">
 			<h2 class="p-single__title"><?= get_the_title() ?></h2>
 			<div class="p-single__info">
-				<?php 
-					$cats = get_the_category(); 
-					var_dump($cats);
-				?>
-				<!-- <a href="cat.html"><?= $cat ?></a> -->
-		
 				<span><?= get_the_date('Y-m-d') ?></span>
 				<p>
-					<a href="cat.html">デイリーニュース</a>
-					<a href="cat.html">デイリーニュース</a>
+					<?php 
+						$cats = get_the_category(); 
+						foreach ($cats as $cat) {
+					?>
+					<a href="cat.html"><?= $cat->name ?></a>
+					<?php } ?>
 				</p>
 			</div>
 
