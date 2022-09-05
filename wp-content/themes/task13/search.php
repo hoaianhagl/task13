@@ -2,20 +2,16 @@
 
 <main class="p-topics">
 	<div class="c-title c-title--page">
-		<h1>TOPICS</h1>
+		<h1>SEARCH RESULTS</h1>
 	</div>
 	<div class="l-container">
 		<ul class="c-listpost">
-			<?php
-				$paged = ( get_query_var( 'paged' ) ) ? absint( get_query_var( 'paged' ) ) : 1;
+			<?php 
+				$s = get_search_query(); 
 				$args = [
-					'post_type' => 'post',
-					'post_status' => 'publish',
-					'posts_per_page'=> 10, 
-					'paged' => $paged 
+					's' =>  $s,
 				];
 				$the_query = new WP_Query( $args );
-				
 				global $wp_query; $wp_query->in_the_loop = true; 
 			?>
 			<?php 
@@ -36,16 +32,12 @@
 		</ul>
 
 		<div class="c-pnav">
-			<?php 
-				echo pagination_tdc($the_query, $paged) 
-			?>
-			
-			<!-- <a href="" class="prev"></a>
+			<a href="" class="prev"></a>
 			<a href="" class="current">1</a>
 			<a href="">2</a>
 			<a href="">3</a>
 			<a href="">4</a>
-			<a href="" class="next"></a> -->
+			<a href="" class="next"></a>
 		</div>
 	</div>
 </main>

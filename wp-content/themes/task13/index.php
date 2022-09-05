@@ -25,33 +25,32 @@
 
 		<div class="p-topics">
 			<h2 class="c-title">Topics</h2>
+			
 			<ul class="c-listpost">
-				<li>
-					<span class="datepost">2018/08/24</span>
-					<a href="cat.html" class="c-label">特集記事</a>
-					<a href="cat.html" class="c-label">デイリーニュース</a>
-					<a href="post">新しい権利　配偶者終身居住権</a>
-				</li>
-				<li>
-					<span class="datepost">2018/08/22</span>
-					<a href="cat.html" class="c-label">デイリーニュース</a>
-					<a href="post">介護保険の被保険者</a>
-				</li>
-				<li>
-					<span class="datepost">2018/08/21</span>
-					<a href="cat.html" class="c-label">デイリーニュース</a>
-					<a href="post.html">自然災害と中小企業支援策</a>
-				</li>	
-				<li>
-					<span class="datepost">2018/08/20</span>
-					<a href="cat.html" class="c-label">特集記事</a>
-					<a href="post.html">国税庁レポートから読み解く2018年度の重点事項</a>
-				</li>
-				<li>
-					<span class="datepost">2018/08/20</span>
-					<a href="cat.html" class="c-label">事務所ニュース</a>
-					<a href="post.html">働き方改革”と管理者</a>
-				</li>
+				<?php
+				$args = [
+					'post_type' => 'post',
+					'post_status' => 'publish',
+					'posts_per_page'=> 5,  
+				];
+				$the_query = new WP_Query( $args );
+				?>
+				<?php global $wp_query; $wp_query->in_the_loop = true; ?>
+				<?php 
+					// The Loop
+					while ( $the_query->have_posts() ) : $the_query->the_post();
+				?>
+					<li>
+						<span class="datepost"><?= get_the_date('Y/m/d') ?></span>
+						<?php 
+							$cats = get_the_category(get_the_ID());
+							foreach ($cats as $cat) {
+						?>
+							<a href="<?= get_category_link($cat->cat_ID) ?>" class="c-label"><?= $cat->name ?></a>
+						<?php } ?>
+						<a href="<?= get_the_permalink() ?>"><?= get_the_title(); ?></a>
+					</li>
+				<?php endwhile; ?>
 			</ul>
 			<div class="l-btn">
 				<a href="topics" class="c-btn c-btn--small">一覧を見る</a>
